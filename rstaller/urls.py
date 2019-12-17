@@ -19,5 +19,6 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('colector/',include('colector.urls')),
-    path('rec/',include('recomendacion.urls'))
+    path('rec/',include('recomendacion.urls')),
+    path('analitica/',include('analitica.urls'))
 ]

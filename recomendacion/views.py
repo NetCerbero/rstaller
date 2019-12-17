@@ -46,3 +46,17 @@ def chart(request, take=10):
     }
 
     return JsonResponse(data, safe=False)
+
+def chartTop(request, take=10):
+    sorted_items = PopularityBasedRecs().recommend_items_from_log(take)
+    ids = [i['content_id'] for i in sorted_items]
+
+    #ms = {m['id']: m['name'] for m in Item.createFromJson(Item.getFromApi()).objects.filter(id__in=ids).values('name', 'id')}
+    data_api = Item.getFromApi()
+    aqui = filtrando(data_api,ids)
+    print(aqui)
+    ms = {m['id']: m['name'] for m in aqui}
+    print(ms)
+    sorted_items = [{'content_id': i['content_id'],'name': ms[i['content_id']]} for i in sorted_items if i['content_id'] in ms]
+
+    return sorted_items
